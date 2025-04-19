@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu Đánh Giá GVCN Trực Tuyến</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .checkbox {
+            width: 40px;
+        }
+        .notes {
+            width: 100px;
+        }
+        .criteria {
+            width: 150px;
+            text-align: left;
+        }
+        .requirement {
+            width: 250px;
+            text-align: left;
+        }
+        input[type="text"] {
+            width: 100%;
+            border: none;
+            background: transparent;
+        }
+        .total-row {
+            font-weight: bold;
+        }
+        .section {
+            margin-top: 20px;
+        }
+        .buttons {
+            text-align: center;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+        .teacher-input {
+            width: 100px;
+            text-align: center;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Phiếu Đánh Giá Mức Độ Hoàn Thành Nhiệm Vụ Của Giáo Viên Chủ Nhiệm</h1>
+    <p style="text-align: center;">(Trực tuyến, hỗ trợ so sánh nhiều lớp)</p>
+
+    <div class="section">
+        <h2>1. Bảng Tiêu Chí Đánh Giá</h2>
+        <table id="evaluationTable">
+            <thead>
+                <tr>
+                    <th class="criteria">Tiêu chí</th>
+                    <th class="requirement">Yêu cầu</th>
+                    <th colspan="2">Lớp 1A</th>
+                    <th colspan="2">Lớp 1B</th>
+                    <th colspan="2">Lớp 1C</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>Tên GVCN</th>
+                    <th colspan="2"><input type="text" class="teacher-input" placeholder="Nhập tên GVCN"></th>
+                    <th colspan="2"><input type="text" class="teacher-input" placeholder="Nhập tên GVCN"></th>
+                    <th colspan="2"><input type="text" class="teacher-input" placeholder="Nhập tên GVCN"></th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th class="checkbox">Có</th>
+                    <th class="notes">Ghi chú</th>
+                    <th class="checkbox">Có</th>
+                    <th class="notes">Ghi chú</th>
+                    <th class="checkbox">Có</th>
+                    <th class="notes">Ghi chú</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="criteria">1. Nắm bắt năng lực học sinh và kết nối phụ huynh</td>
+                    <td class="requirement">Nắm bắt đầy đủ năng lực của 100% học sinh; trao đổi định kỳ với ít nhất 90% phụ huynh qua Zalo, điện thoại hoặc gặp trực tiếp; phản hồi thắc mắc trong 2 giờ.</td>
+                    <td class="checkbox"><input type="checkbox" class="class-1a" onchange="updateScore('class-1a', 'score-1a')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1b" onchange="updateScore('class-1b', 'score-1b')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1c" onchange="updateScore('class-1c', 'score-1c')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                </tr>
+                <tr>
+                    <td class="criteria">2. Gửi nội dung bài học và tư liệu</td>
+                    <td class="requirement">Gửi đầy đủ nội dung bài học (tóm tắt, bài tập) và ít nhất 1 ảnh chân dung học sinh (đẹp, sáng) cùng 1 video lớp học (vui nhộn, thể hiện tinh thần hào hứng) vào nhóm Zalo sau 100% buổi dạy trong tháng.</td>
+                    <td class="checkbox"><input type="checkbox" class="class-1a" onchange="updateScore('class-1a', 'score-1a')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1b" onchange="updateScore('class-1b', 'score-1b')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1c" onchange="updateScore('class-1c', 'score-1c')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                </tr>
+                <tr>
+                    <td class="criteria">3. Tỷ lệ học sinh tiến bộ</td>
+                    <td class="requirement">Ít nhất 90% học sinh tiến bộ (dựa trên đánh giá bài tập, kỹ năng), chăm chỉ và yêu thích đi học (phản hồi từ phụ huynh).</td>
+                    <td class="checkbox"><input type="checkbox" class="class-1a" onchange="updateScore('class-1a', 'score-1a')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1b" onchange="updateScore('class-1b', 'score-1b')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1c" onchange="updateScore('class-1c', 'score-1c')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                </tr>
+                <tr>
+                    <td class="criteria">4. Tỷ lệ học sinh yếu và hỗ trợ</td>
+                    <td class="requirement">Tỷ lệ học sinh yếu dưới 20%; 100% học sinh yếu (nếu có) được hỗ trợ riêng (bài tập bổ sung, kèm cặp), với ít nhất 50% học sinh yếu cải thiện (dựa trên đánh giá trung tâm).</td>
+                    <td class="checkbox"><input type="checkbox" class="class-1a" onchange="updateScore('class-1a', 'score-1a')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1b" onchange="updateScore('class-1b', 'score-1b')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1c" onchange="updateScore('class-1c', 'score-1c')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                </tr>
+                <tr>
+                    <td class="criteria">5. Hoàn thành bài tập về nhà</td>
+                    <td class="requirement">Hơn 90% học sinh trong lớp hoàn thành bài tập về nhà đầy đủ, đúng hạn trong tháng.</td>
+                    <td class="checkbox"><input type="checkbox" class="class-1a" onchange="updateScore('class-1a', 'score-1a')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1b" onchange="updateScore('class-1b', 'score-1b')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1c" onchange="updateScore('class-1c', 'score-1c')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                </tr>
+                <tr>
+                    <td class="criteria">6. Nhận xét, sửa bài và tương tác nhóm Zalo</td>
+                    <td class="requirement">Sửa bài và nhận xét chi tiết cho ít nhất 90% bài tập của học sinh; đăng ít nhất 5 bài sửa mẫu lên nhóm Zalo; tương tác tích cực (bình luận, khuyến khích) ít nhất 10 lần/tuần, đảm bảo 100% học sinh nộp bài đều đặn.</td>
+                    <td class="checkbox"><input type="checkbox" class="class-1a" onchange="updateScore('class-1a', 'score-1a')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1b" onchange="updateScore('class-1b', 'score-1b')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1c" onchange="updateScore('class-1c', 'score-1c')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                </tr>
+                <tr>
+                    <td class="criteria">7. Kỹ năng viết của học sinh</td>
+                    <td class="requirement">Hơn 30% học sinh trong lớp viết được nét thanh nét đậm đúng chuẩn (dựa trên đánh giá trung tâm).</td>
+                    <td class="checkbox"><input type="checkbox" class="class-1a" onchange="updateScore('class-1a', 'score-1a')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1b" onchange="updateScore('class-1b', 'score-1b')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1c" onchange="updateScore('class-1c', 'score-1c')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                </tr>
+                <tr>
+                    <td class="criteria">8. Ra bài tập trước đúng và đầy đủ</td>
+                    <td class="requirement">Ra bài tập trước cho 100% buổi học trong tháng, đảm bảo bài tập phù hợp, đầy đủ và gửi qua Zalo trước ít nhất 24 giờ.</td>
+                    <td class="checkbox"><input type="checkbox" class="class-1a" onchange="updateScore('class-1a', 'score-1a')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1b" onchange="updateScore('class-1b', 'score-1b')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1c" onchange="updateScore('class-1c', 'score-1c')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                </tr>
+                <tr>
+                    <td class="criteria">9. Điểm danh học sinh đầy đủ</td>
+                    <td class="requirement">Điểm danh chính xác 100% học sinh trong tất cả buổi học, báo cáo kịp thời cho trung tâm.</td>
+                    <td class="checkbox"><input type="checkbox" class="class-1a" onchange="updateScore('class-1a', 'score-1a')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1b" onchange="updateScore('class-1b', 'score-1b')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1c" onchange="updateScore('class-1c', 'score-1c')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                </tr>
+                <tr>
+                    <td class="criteria">10. Giải quyết học bù</td>
+                    <td class="requirement">Sắp xếp học bù cho 100% học sinh nghỉ (nếu có), đảm bảo theo kịp tiến độ lớp trong tháng.</td>
+                    <td class="checkbox"><input type="checkbox" class="class-1a" onchange="updateScore('class-1a', 'score-1a')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1b" onchange="updateScore('class-1b', 'score-1b')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1c" onchange="updateScore('class-1c', 'score-1c')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                </tr>
+                <tr>
+                    <td class="criteria">11. Tạo môi trường học tập tích cực</td>
+                    <td class="requirement">Tổ chức ít nhất 1 hoạt động ngoại khóa hoặc trò chơi học tập trong tháng, được ít nhất 90% phụ huynh và học sinh đánh giá tích cực (qua khảo sát hoặc phản hồi Zalo).</td>
+                    <td class="checkbox"><input type="checkbox" class="class-1a" onchange="updateScore('class-1a', 'score-1a')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1b" onchange="updateScore('class-1b', 'score-1b')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1c" onchange="updateScore('class-1c', 'score-1c')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                </tr>
+                <tr>
+                    <td class="criteria">12. Khuyến khích phát triển kỹ năng mềm</td>
+                    <td class="requirement">Hướng dẫn học sinh phát triển ít nhất 1 kỹ năng mềm (giao tiếp, làm việc nhóm, quản lý thời gian), với ít nhất 80% học sinh tiến bộ (dựa trên nhận xét của GVCN hoặc trung tâm).</td>
+                    <td class="checkbox"><input type="checkbox" class="class-1a" onchange="updateScore('class-1a', 'score-1a')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1b" onchange="updateScore('class-1b', 'score-1b')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1c" onchange="updateScore('class-1c', 'score-1c')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                </tr>
+                <tr>
+                    <td class="criteria">13. Sáng tạo trong phương pháp giảng dạy</td>
+                    <td class="requirement">Áp dụng ít nhất 1 phương pháp giảng dạy mới (công cụ trực quan, trò chơi giáo dục, bài tập tương tác), được trung tâm hoặc phụ huynh đánh giá hiệu quả với ít nhất 80% học sinh.</td>
+                    <td class="checkbox"><input type="checkbox" class="class-1a" onchange="updateScore('class-1a', 'score-1a')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1b" onchange="updateScore('class-1b', 'score-1b')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1c" onchange="updateScore('class-1c', 'score-1c')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                </tr>
+                <tr>
+                    <td class="criteria">14. Chuyên cần</td>
+                    <td class="requirement">GVCN dạy trên 30 ca/tháng, không nghỉ buổi nào (trừ lý do bất khả kháng).</td>
+                    <td class="checkbox"><input type="checkbox" class="class-1a" onchange="updateScore('class-1a', 'score-1a')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1b" onchange="updateScore('class-1b', 'score-1b')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                    <td class="checkbox"><input type="checkbox" class="class-1c" onchange="updateScore('class-1c', 'score-1c')"></td>
+                    <td class="notes"><input type="text" placeholder="Ghi chú..."></td>
+                </tr>
+                <tr class="total-row">
+                    <td colspan="2">Tổng điểm</td>
+                    <td colspan="2" id="score-1a">0</td>
+                    <td colspan="2" id="score-1b">0</td>
+                    <td colspan="2" id="score-1c">0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>2. Cách Tính Điểm và Phân Loại</h2>
+        <p><strong>Tổng điểm:</strong> Mỗi tiêu chí đạt được tính 1 điểm (tích "Có"). Tổng điểm tối đa là 14 điểm.</p>
+        <p><strong>Phân loại:</strong></p>
+        <ul>
+            <li><strong>Xuất sắc:</strong> 13-14 điểm (đạt từ 90% tổng điểm).</li>
+            <li><strong>Tốt:</strong> 10-12 điểm.</li>
+            <li><strong>Khá:</strong> 7-9 điểm.</li>
+            <li><strong>Chưa đạt:</strong> Dưới 7 điểm.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>3. Hướng Dẫn Sử Dụng Bảng</h2>
+        <ul>
+            <li><strong>Quản lý:</strong> Nhập tên GVCN cho mỗi lớp. Tích vào ô "Có" nếu GVCN đạt yêu cầu của tiêu chí, bỏ chọn nếu không đạt. Nhập ghi chú nếu cần (ví dụ: lý do không đạt, minh chứng cụ thể).</li>
+            <li><strong>Minh chứng:</strong> GVCN cần cung cấp tài liệu hỗ trợ (bản ghi nhóm Zalo, video, báo cáo điểm danh, lịch học bù, báo cáo hoạt động ngoại khóa, v.v.) để xác nhận đạt tiêu chí.</li>
+            <li><strong>So sánh lớp:</strong> Bảng hiển thị điểm số tự động cho từng lớp, giúp so sánh hiệu suất dễ dàng.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>4. Ghi Chú Bổ Sung</h2>
+        <ul>
+            <li>Trung tâm có thể tổ chức khảo sát định kỳ với phụ huynh và học sinh để đánh giá các tiêu chí liên quan đến môi trường học tập và kỹ năng mềm.</li>
+            <li>Quản lý lưu trữ bảng (in hoặc PDF) để theo dõi hiệu suất GVCN.</li>
+        </ul>
+    </div>
+
+    <div class="buttons no-print">
+        <button onclick="window.print()">In Bảng</button>
+        <button onclick="saveAsPDF()">Lưu PDF</button>
+        <button onclick="resetTable()">Xóa Bảng</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        function updateScore(className, scoreId) {
+            const checkboxes = document.querySelectorAll(`.${className}`);
+            let score = 0;
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) score++;
+            });
+            document.getElementById(scoreId).textContent = score;
+        }
+
+        function saveAsPDF() {
+            const element = document.body;
+            html2pdf()
+                .from(element)
+                .set({
+                    margin: 10,
+                    filename: 'Phieu_Danh_Gia_GVCN.pdf',
+                    html2canvas: { scale: 2 },
+                    jsPDF: { orientation: 'landscape', unit: 'mm', format: 'a4' }
+                })
+                .save();
+        }
+
+        function resetTable() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
+            document.querySelectorAll('input[type="text"]').forEach(input => input.value = '');
+            document.querySelectorAll('[id^="score-"]').forEach(score => score.textContent = '0');
+        }
+    </script>
+</body>
+</html>
